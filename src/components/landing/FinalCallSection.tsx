@@ -15,9 +15,6 @@ export default function FinalCallSection() {
           <p className="text-2xl text-gray-800 mb-6">
             “<span className="font-semibold text-[#4F46E5]">Sedekah tidaklah mengurangi harta.</span>” (HR. Muslim)
           </p>
-          <button className="bg-[#4F46E5] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#4338CA] transition-all transform hover:scale-105">
-            Donasi Sekarang
-          </button>
           <p className="text-xl text-gray-600 mt-4">
             Dukungan Anda, sekecil apa pun, adalah <span className="font-semibold text-[#4F46E5]">investasi akhirat</span> yang tidak terputus.
           </p>

@@ -15,7 +15,7 @@ export default function GoalsSection() {
           className="flex flex-col md:flex-row items-center gap-8"
         >
           <div className="w-full md:w-1/2 order-2 md:order-1">
-            <h3 className="text-4xl font-bold text-gray-800 mb-6">
+            <h3 className="text-5xl font-bold text-gray-800 mb-6">
               Mari Bersama Mewujudkan <span className="text-[#4F46E5]">Sekolah yang Lebih Layak</span>
             </h3>
             <p className="text-xl text-gray-600 mb-6">
@@ -31,14 +31,6 @@ export default function GoalsSection() {
                 <li key={index} className="text-gray-600" dangerouslySetInnerHTML={{ __html: item }} />
               ))}
             </ul>
-            <div className="mt-6 text-xl">
-              <p className="text-gray-600">
-                💰 <strong>Total Dana yang Dibutuhkan:</strong> <span className="font-semibold text-[#4F46E5]">Rp 35.000.000,-</span>
-              </p>
-              <p className="text-gray-600">
-                🕰️ <strong>Target Penyelesaian:</strong> <span className="font-semibold text-[#4F46E5]">April 2025</span>.
-              </p>
-            </div>
           </div>
           <div className="w-full md:w-1/2 order-1 md:order-2">
             <Image
@@ -48,6 +40,26 @@ export default function GoalsSection() {
               height={400}
               className="rounded-2xl shadow-2xl"
             />
+          </div>
+        </motion.div>
+
+        {/* Section untuk menonjolkan informasi penting */}
+        <motion.div
+          className="mt-12 w-full bg-purple-600 text-orange-400 p-8 rounded-lg shadow-lg"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h4 className="text-4xl font-bold mb-4 text-center">
+            Informasi Penting
+          </h4>
+          <div className="text-2xl text-center">
+            <p className="mb-2">
+              💰 <strong>Total Dana yang Dibutuhkan:</strong> <span className="font-semibold">Rp 35.000.000,-</span>
+            </p>
+            <p>
+              🕰️ <strong>Target Penyelesaian:</strong> <span className="font-semibold">April 2025</span>.
+            </p>
           </div>
         </motion.div>
       </div>
