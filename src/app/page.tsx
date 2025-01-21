@@ -8,6 +8,10 @@ import DonationCallSection from "../components/landing/DonationCallSection";
 import BenefitsSection from "../components/landing/BenefitsSection";
 import FinalCallSection from "../components/landing/FinalCallSection";
 import Navbar from "@/components/Navbar";
+
+import ScrollToTop from "@/components/ScrollToTop";
+
+
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -19,6 +23,7 @@ export default function Home() {
       <BenefitsSection />
       <FinalCallSection />
       <DonationCallSection />
+      <ScrollToTop />
     </div>
   );
 }
