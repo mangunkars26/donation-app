@@ -32,3 +32,36 @@ body {
 .animate-fade-in-delay {
   animation: fadeIn 1s ease-out 0.5s both;
 }
+
+@layer utilities {
+  .animate-fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+}
+
+/* styles.css atau file CSS Anda */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-section-in {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+/* Optimasi untuk gambar */
+.image-container {
+  will-change: transform;
+}
+
+/* Optimasi untuk teks dan konten */
+.text-container {
+  will-change: opacity, transform;
+}
