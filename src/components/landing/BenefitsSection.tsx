@@ -15,7 +15,7 @@ export default function BenefitsSection() {
           className="text-center"
         >
           <h3 className="text-5xl font-extrabold text-white mb-12">
-            Manfaat dari <span className="text-purple-300">Sedekah Anda</span>
+            Manfaat dari <span className="text-purple-900">Sedekah Anda</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {[
