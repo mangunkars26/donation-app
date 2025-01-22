@@ -66,7 +66,7 @@ export default function HeroSection() {
               ref={tagRef}
               className="opacity-0 inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4"
             >
-              <span className="text-white/90 text-sm font-medium">
+              <span className="text-white/90 mt-4 text-sm font-medium">
                 ✨ Mari Bergabung Bersama Kami
               </span>
             </div>
@@ -105,6 +105,9 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
               <button 
                 ref={buttonRef}
+                onClick={() => {
+                  document.getElementById("donation-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className="opacity-0 bg-[#854D8E] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:scale-105 active:scale-95"
               >
                 <span>Donasi Sekarang</span>

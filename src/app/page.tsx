@@ -8,7 +8,7 @@ import DonationCallSection from "../components/landing/DonationCallSection";
 import BenefitsSection from "../components/landing/BenefitsSection";
 import FinalCallSection from "../components/landing/FinalCallSection";
 import Navbar from "@/components/Navbar";
-
+import YouTubeSection from "@/components/landing/YoutubeSection";
 import ScrollToTop from "@/components/ScrollToTop";
 
 
@@ -17,6 +17,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Navbar />
       <HeroSection />
+      <YouTubeSection />
       <ChallengesSection />
       <GoalsSection />
       <AchievementsSection />

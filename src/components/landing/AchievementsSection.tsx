@@ -2,17 +2,23 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { X, Check } from "lucide-react";
 
 export default function AchievementsSection() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 }
-  };
+  const achievements = [
+    {
+      before: "Belum bisa baca Qur'an",
+      after: "Sudah mahir baca Qur'an"
+    },
+    {
+      before: "Belum hafal doa harian",
+      after: "Sudah hafal 20 doa harian"
+    },
+    {
+      before: "Belum percaya diri",
+      after: "Menjadi lebih percaya diri"
+    },
+  ];
 
   return (
     <section className="bg-gradient-to-b from-orange-600 to-orange-700 py-8 md:py-20">
@@ -31,36 +37,35 @@ export default function AchievementsSection() {
             <span className="font-semibold text-yellow-200">Alhamdulillah</span>:
           </p>
           
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-4 md:space-y-6"
-          >
+          <div className="space-y-4 md:space-y-6">
             {achievements.map((achievement, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
-                className="bg-orange-800/70 backdrop-blur rounded-xl p-4 md:p-6 shadow-lg mx-2 md:mx-0 hover:bg-orange-800 transition-all duration-300"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="bg-orange-800/70 backdrop-blur rounded-xl p-4 md:p-6 shadow-lg mx-2 md:mx-0"
               >
-                <div className="flex gap-3 items-start text-left">
-                  <span className="text-yellow-200 text-xl mt-1 flex-shrink-0">✨</span>
-                  <p className="text-base sm:text-lg md:text-xl text-white font-poppins">
-                    {achievement}
-                  </p>
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center text-white">
+                  <div className="flex items-center gap-3 w-full sm:w-1/2">
+                    <X className="w-9 h-9 text-red-400 flex-shrink-0" />
+                    <p className="text-lg sm:text-lg font-poppins text-left">
+                      {achievement.before}
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 w-full sm:w-1/2">
+                    <Check className="w-9 h-9 text-green-400 flex-shrink-0" />
+                    <p className="text-lg sm:text-lg font-poppins text-left">
+                      {achievement.after}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
   );
 }
-
-const achievements = [
-  "Anak-anak yang dulu belum bisa membaca, kini telah lancar membaca Iqro.",
-  "Santri sudah mampu menghafal lebih dari 10 hadits dan 20 doa harian.",
-  "Kegiatan Sabtu kreatif membantu anak-anak lebih mandiri dan percaya diri."
-];
