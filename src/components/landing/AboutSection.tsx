@@ -25,9 +25,9 @@ const AboutSection = () => {
               <div className="max-w-3xl mx-auto space-y-6 text-base md:text-lg font-poppins leading-relaxed">
                 <p>
                   <span className="font-semibold text-yellow-200">
-                    Yayasan Pondok Pesantren Keluarga Al-Qur'an
+                    Yayasan Pondok Pesantren Keluarga Al-Qur&apos;an
                   </span>{" "}
-                  lahir dari tekad untuk membangun generasi Qur'ani melalui pendidikan dan pembinaan. Berawal dari merintis pondok tahfidz kecil di Desa Ketaon, Boyolali, kami terus berikhtiar menjadi pusat pembelajaran yang membawa manfaat luas bagi umat.
+                  lahir dari tekad untuk membangun generasi Qur&apos;ani melalui pendidikan dan pembinaan. Berawal dari merintis pondok tahfidz kecil di Desa Ketaon, Boyolali, kami terus berikhtiar menjadi pusat pembelajaran yang membawa manfaat luas bagi umat.
                 </p>
                 
                 <p>
@@ -35,11 +35,11 @@ const AboutSection = () => {
                   <span className="font-semibold text-yellow-200">
                     lebih dari 50 santri
                   </span>
-                  , mendidik mereka dengan nilai-nilai Al-Qur'an sejak usia dini.
+                  , mendidik mereka dengan nilai-nilai Al-Qur&apos;an sejak usia dini.
                 </p>
 
                 <p className="text-yellow-100 font-medium">
-                  Setiap dukungan dari Anda adalah langkah nyata dalam melanjutkan perjuangan ini. Bersama, kita wujudkan generasi masa depan yang mencintai Al-Qur'an.
+                  Setiap dukungan dari Anda adalah langkah nyata dalam melanjutkan perjuangan ini. Bersama, kita wujudkan generasi masa depan yang mencintai Al-Qur&apos;an.
                 </p>
               </div>
             </div>

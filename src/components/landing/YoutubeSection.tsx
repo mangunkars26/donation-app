@@ -62,44 +62,47 @@ const YouTubeSection: React.FC = () => {
 
     // Initialize YouTube Player API
     const initializePlayer = () => {
-      if (!playerRef.current) return;
-
-      const newPlayer = new window.YT.Player(playerRef.current, {
-        videoId: "fCGecWrG4xg",
-        playerVars: {
-          autoplay: 1,
-          mute: 0,
-          controls: 1,
-          showinfo: 0,
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-        },
-        events: {
-          onReady: (event) => {
-            setPlayer(event.target);
-            event.target.playVideo();
+        if (!playerRef.current) return;
+      
+       new window.YT.Player(playerRef.current, {
+          videoId: "fCGecWrG4xg",
+          playerVars: {
+            autoplay: 1,
+            mute: 0,
+            controls: 1,
+            showinfo: 0,
+            rel: 0,
+            modestbranding: 1,
+            playsinline: 1,
           },
-          onStateChange: (event) => {
-            // Replay the video if it ends
-            if (event.data === window.YT.PlayerState.ENDED) {
+          events: {
+            onReady: (event) => {
+              setPlayer(event.target); // Set player instance to state
               event.target.playVideo();
-            }
-
-            // Automatically play video on the first pause
-            if (event.data === window.YT.PlayerState.PAUSED && !hasPlayed.current) {
-              event.target.playVideo();
-              hasPlayed.current = true;
-            }
-
-            // Mark video as played when it starts playing
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              hasPlayed.current = true;
-            }
+            },
+            onStateChange: (event) => {
+              // Replay the video if it ends
+              if (event.data === window.YT.PlayerState.ENDED) {
+                event.target.playVideo();
+              }
+      
+              // Automatically play video on the first pause
+              if (event.data === window.YT.PlayerState.PAUSED && !hasPlayed.current) {
+                event.target.playVideo();
+                hasPlayed.current = true;
+              }
+      
+              // Mark video as played when it starts playing
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                hasPlayed.current = true;
+              }
+            },
           },
-        },
-      });
-    };
+        });
+      
+        // The player instance is stored in state, so there's no need to assign `newPlayer` locally
+      };
+      
 
     // Assign the YouTube API ready callback
     window.onYouTubeIframeAPIReady = initializePlayer;
