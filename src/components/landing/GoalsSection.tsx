@@ -2,67 +2,75 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function GoalsSection() {
   return (
-    <section className="bg-gradient-to-br from-[#F9FAFB] to-[#E5E7EB] py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
+    <div className="bg-gradient-to-br from-blue-50 to-white py-16 px-4 md:px-12">
+      <div className="max-w-4xl mx-auto">
+        <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col md:flex-row items-center gap-8"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
         >
-          <div className="w-full md:w-1/2 order-2 md:order-1">
-            <h3 className="text-5xl font-bold text-gray-800 mb-6">
-              Mari Bersama Mewujudkan <span className="text-[#4F46E5]">Sekolah yang Lebih Layak</span>
-            </h3>
-            <p className="text-xl text-gray-600 mb-6">
-              Melalui proyek renovasi ini, kami ingin:
-            </p>
-            <ul className="space-y-4 text-xl">
-              {[
-                "1️⃣ <span className='font-semibold'>Merenovasi ruang belajar</span> agar lebih nyaman dan aman.",
-                "2️⃣ <span className='font-semibold'>Menambah ruang kelas baru</span> untuk menampung lebih banyak siswa.",
-                "3️⃣ <span className='font-semibold'>Memperbaiki fasilitas bermain</span> indoor dan outdoor.",
-                "4️⃣ <span className='font-semibold'>Menghadirkan gerbang sekolah</span> yang lebih kokoh dan aman.",
-              ].map((item, index) => (
-                <li key={index} className="text-gray-600" dangerouslySetInnerHTML={{ __html: item }} />
-              ))}
-            </ul>
-          </div>
-          <div className="w-full md:w-1/2 order-1 md:order-2">
-            <Image
-              src="/images/image3.jpg" // Ganti dengan path gambar Anda
-              alt="Tujuan Proyek"
-              width={600}
-              height={400}
-              className="rounded-2xl shadow-2xl"
-            />
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
+            Mari Bersama Mewujudkan Sekolah yang Lebih Layak
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Melalui proyek renovasi ini, kami ingin:
+          </p>
         </motion.div>
 
-        {/* Section untuk menonjolkan informasi penting */}
-        <motion.div
-          className="mt-12 w-full bg-purple-600 text-orange-400 p-8 rounded-lg shadow-lg"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.3 }}
+          className="grid md:grid-cols-2 gap-6 mb-12"
         >
-          <h4 className="text-4xl font-bold mb-4 text-center">
+          {[
+            "Merenovasi ruang belajar agar lebih nyaman dan aman.",
+            "Menambah ruang kelas baru untuk menampung lebih banyak siswa.",
+            "Memperbaiki fasilitas bermain indoor dan outdoor.",
+            "Menghadirkan gerbang sekolah yang lebih kokoh dan aman.",
+          ].map((item, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-white shadow-md rounded-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-all"
+            >
+              <div className="flex items-center">
+                <span className="mr-4 text-2xl text-blue-600">
+                  {index + 1}
+                </span>
+                <p className="text-gray-700">{item}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="bg-blue-100 rounded-lg p-8 text-center"
+        >
+          <h3 className="text-2xl font-semibold text-blue-900 mb-6">
             Informasi Penting
-          </h4>
-          <div className="text-2xl text-center">
-            <p className="mb-2">
-              💰 <strong>Total Dana yang Dibutuhkan:</strong> <span className="font-semibold">Rp 35.000.000,-</span>
-            </p>
-            <p>
-              🕰️ <strong>Target Penyelesaian:</strong> <span className="font-semibold">April 2025</span>.
-            </p>
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="text-4xl mb-4 text-green-600">💰</div>
+              <h4 className="font-bold text-gray-800 mb-2">Total Dana</h4>
+              <p className="text-gray-600">Rp 35.000.000,-</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="text-4xl mb-4 text-orange-600">🕰️</div>
+              <h4 className="font-bold text-gray-800 mb-2">Target Penyelesaian</h4>
+              <p className="text-gray-600">April 2025</p>
+            </div>
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

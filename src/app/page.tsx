@@ -10,7 +10,7 @@ import FinalCallSection from "../components/landing/FinalCallSection";
 import Navbar from "@/components/Navbar";
 import YouTubeSection from "@/components/landing/YoutubeSection";
 import ScrollToTop from "@/components/ScrollToTop";
-
+import AboutSection from "@/components/landing/AboutSection";
 
 export default function Home() {
   return (
@@ -18,6 +18,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <YouTubeSection />
+      <AboutSection />
       <ChallengesSection />
       <GoalsSection />
       <AchievementsSection />
