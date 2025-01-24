@@ -56,7 +56,7 @@ const DonationCallSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl"
         >
-          <h2 className="text-5xl font-extrabold text-center mb-8 text-purple-900">
+          <h2 className="text-5xl font-extrabold text-center mb-8 text-gray-200">
             Wujudkan Amal Jariyah Anda
           </h2>
 
@@ -86,7 +86,7 @@ const DonationCallSection: React.FC = () => {
               </div>
 
               <div className="mt-4">
-                <div className="relative">
+                <div className="relative flex items-center gap-4">
                   <input
                     type="text"
                     placeholder="Nominal Lain"

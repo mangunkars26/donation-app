@@ -47,25 +47,46 @@ interface YTPlayer {
 const YouTubeSection: React.FC = () => {
   const [player, setPlayer] = useState<YTPlayer | null>(null);
   const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const hasPlayed = useRef<boolean>(false);
 
-  useEffect(() => {
-    // Add YouTube API script only once
-    const scriptExists = document.querySelector('script[src*="youtube.com/iframe_api"]');
-    if (!scriptExists) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
-    }
 
-    // Initialize YouTube Player API
-    const initializePlayer = () => {
-        if (!playerRef.current) return;
-      
-       new window.YT.Player(playerRef.current, {
-          videoId: "fCGecWrG4xg",
+  useEffect(() => {
+    let mounted = true;
+  
+    const loadYouTubeAPI = () => {
+      return new Promise((resolve, reject) => {
+        if (window.YT) {
+          resolve(window.YT);
+          return;
+        }
+  
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        tag.onerror = (err) => reject(err);
+        
+        window.onYouTubeIframeAPIReady = () => {
+          if (mounted) {
+            resolve(window.YT);
+          }
+        };
+  
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+      });
+    };
+  
+    const initializePlayer = async () => {
+      try {
+        setIsLoading(true);
+        await loadYouTubeAPI();
+    
+        if (!playerRef.current || !mounted) return;
+    
+        const newPlayer = new window.YT.Player(playerRef.current, {
+          videoId: "qq6zlYPreOA",
           playerVars: {
             autoplay: 1,
             mute: 0,
@@ -76,45 +97,40 @@ const YouTubeSection: React.FC = () => {
             playsinline: 1,
           },
           events: {
-            onReady: (event) => {
-              setPlayer(event.target); // Set player instance to state
-              event.target.playVideo();
+            onReady: (event: { target: YTPlayer }) => {
+              if (mounted) {
+                setPlayer(event.target); // Set player di sini
+                setIsLoading(false);
+                event.target.playVideo();
+              }
             },
             onStateChange: (event) => {
-              // Replay the video if it ends
+              if (!mounted) return;
               if (event.data === window.YT.PlayerState.ENDED) {
                 event.target.playVideo();
-              }
-      
-              // Automatically play video on the first pause
-              if (event.data === window.YT.PlayerState.PAUSED && !hasPlayed.current) {
-                event.target.playVideo();
-                hasPlayed.current = true;
-              }
-      
-              // Mark video as played when it starts playing
-              if (event.data === window.YT.PlayerState.PLAYING) {
-                hasPlayed.current = true;
               }
             },
           },
         });
-      
-        // The player instance is stored in state, so there's no need to assign `newPlayer` locally
-      };
-      
-
-    // Assign the YouTube API ready callback
-    window.onYouTubeIframeAPIReady = initializePlayer;
-
-    // Cleanup function
+      } catch (err) {
+        console.error("Error initializing YouTube player:", err);
+        if (mounted) {
+          setError("Failed to initialize video player");
+          setIsLoading(false);
+        }
+      }
+    };
+  
+    initializePlayer();
+  
     return () => {
+      mounted = false;
       if (player) {
         player.destroy();
       }
-      window.onYouTubeIframeAPIReady = undefined; // Reset global callback
     };
-  }, [player]);
+  }, [player]); // Tambahkan dependency array jika diperlukan
+
 
   const toggleSound = () => {
     if (!player) return;
@@ -131,28 +147,65 @@ const YouTubeSection: React.FC = () => {
     }
   };
 
+  if (error) {
+    return (
+      <section id="gallery" className="bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900 py-16 md:py-24">
+        <div className="container mx-auto px-4 text-center text-white">
+          <p>Sorry, there was an error loading the video: {error}</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="bg-gradient-to-b from-orange-700 to-orange-800 py-12 md:py-20">
-      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+    <section 
+      id="gallery"
+      className="bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900 py-16 md:py-24 relative overflow-hidden"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2" />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 max-w-5xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          viewport={{ once: true }}
+          className="text-center space-y-8"
         >
-          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-poppins leading-tight">
-            Sekilas Kegiatan Kami
-          </h3>
-          <p className="text-lg sm:text-xl text-white/90 mb-8 font-poppins max-w-2xl mx-auto">
-            Mari simak kegiatan pembelajaran dan aktivitas bermanfaat yang kami lakukan bersama para santri
-          </p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-poppins leading-tight"
+          >
+            Our Journey in Action
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-lg sm:text-xl text-white/90 mb-12 font-light max-w-2xl mx-auto"
+          >
+            Experience the vibrant learning environment and meaningful activities that shape our students' journey
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative rounded-xl overflow-hidden shadow-2xl bg-orange-900/50 backdrop-blur group"
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="relative rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(147,51,234,0.3)] bg-purple-900/50 backdrop-blur group"
           >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-purple-900/50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+              </div>
+            )}
+            
             {/* Sound toggle button */}
             <button
               onClick={toggleSound}
@@ -179,12 +232,12 @@ const YouTubeSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-6 bg-orange-600/30 rounded-lg p-4 inline-block"
+            transition={{ delay: 1.2 }}
+            className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block border border-white/20"
           >
-            <p className="text-white/90 text-sm font-poppins flex items-center justify-center gap-2">
+            <p className="text-white/90 text-sm font-medium flex items-center justify-center gap-3">
               <Volume2 className="w-4 h-4" />
-              Hover video dan klik icon suara untuk mendengarkan
+              Hover over the video and click the sound icon to toggle audio
             </p>
           </motion.div>
         </motion.div>

@@ -19,12 +19,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const navItems = [
-    { name: "Beranda", href: "/" },
-    { name: "Tentang Kami", href: "/about" },
-    { name: "Program", href: "/program" },
-    { name: "Galeri", href: "/gallery" },
-    { name: "Kontak", href: "/contact" },
+    { name: "Beranda", href: "home" },
+    { name: "Tentang Kami", href: "about" },
+    { name: "Program", href: "program" },
+    { name: "Galeri", href: "gallery" },
+    { name: "Kontak", href: "contact" },
   ];
 
   return (
@@ -58,14 +68,14 @@ export default function Navbar() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => scrollToSection(item.href)}
                   className="text-white/90 hover:text-white transition-colors relative group"
                 >
                   {item.name}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#69247C] transition-all duration-300 group-hover:w-full"></span>
-                </Link>
+                </button>
               ))}
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -119,14 +129,16 @@ export default function Navbar() {
               <div className="container mx-auto px-4 py-4">
                 <div className="flex flex-col space-y-4">
                   {navItems.map((item) => (
-                    <Link
+                    <button
                       key={item.name}
-                      href={item.href}
+                      onClick={() => {
+                        scrollToSection(item.href);
+                        setIsMobileMenuOpen(false);
+                      }}
                       className="text-white/90 hover:text-white transition-colors py-2"
-                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
-                    </Link>
+                    </button>
                   ))}
                   <motion.button
                     whileTap={{ scale: 0.95 }}

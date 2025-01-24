@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const AboutSection = () => {
   return (
-    <section className="bg-gradient-to-b from-purple-900 to-purple-950 py-16 md:py-24">
+    <section className="bg-gradient-to-b from-orange-700 to-orange-800 py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -21,7 +21,7 @@ const AboutSection = () => {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="space-y-6 text-white/90"
           >
-            <div className="backdrop-blur-sm bg-purple-800/10 rounded-2xl p-6 md:p-8 shadow-xl">
+            <div className="backdrop-blur-sm bg-orange-800/10 rounded-2xl p-6 md:p-8 shadow-xl">
               <div className="max-w-3xl mx-auto space-y-6 text-base md:text-lg font-poppins leading-relaxed">
                 <p>
                   <span className="font-semibold text-yellow-200">
