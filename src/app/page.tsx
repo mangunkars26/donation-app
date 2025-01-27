@@ -11,7 +11,9 @@ import Navbar from "@/components/Navbar";
 import YouTubeSection from "@/components/landing/YoutubeSection";
 import ScrollToTop from "@/components/ScrollToTop";
 import AboutSection from "@/components/landing/AboutSection";
+import Nominal from "@/components/landing/Nominal";
 
+import Contact from "@/components/landing/Contact";
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -21,11 +23,13 @@ export default function Home() {
       <AboutSection />
       <ChallengesSection />
       <GoalsSection />
+      <Nominal /> 
       <AchievementsSection />
       <BenefitsSection />
       <FinalCallSection />
       <DonationCallSection />
       <ScrollToTop />
+      <Contact />
     </div>
   );
 }

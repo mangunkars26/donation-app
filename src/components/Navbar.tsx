@@ -32,8 +32,6 @@ export default function Navbar() {
   const navItems = [
     { name: "Beranda", href: "home" },
     { name: "Tentang Kami", href: "about" },
-    { name: "Program", href: "program" },
-    { name: "Galeri", href: "gallery" },
     { name: "Kontak", href: "contact" },
   ];
 
@@ -70,7 +68,9 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => {
+                    scrollToSection(item.href);
+                  }}
                   className="text-white/90 hover:text-white transition-colors relative group"
                 >
                   {item.name}
@@ -80,6 +80,7 @@ export default function Navbar() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToSection("donation-section")}
                 className="bg-[#69247C] text-white px-6 py-2 rounded-xl font-medium hover:shadow-lg transition-all"
               >
                 Donasi
@@ -118,7 +119,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -150,7 +151,7 @@ export default function Navbar() {
               </div>
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
       </motion.nav>
 
       {/* Gradient Line */}

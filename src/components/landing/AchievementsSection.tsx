@@ -7,56 +7,53 @@ import { X, Check } from "lucide-react";
 export default function AchievementsSection() {
   const achievements = [
     {
-      before: "Belum bisa baca Qur'an",
-      after: "Sudah mahir baca Qur'an"
+      before: "Anak-anak Belum bisa baca Qur'an",
+      after: "Mahir baca Qur'an dengan tajwid yang baik"
     },
     {
-      before: "Belum hafal doa harian",
-      after: "Sudah hafal 20 doa harian"
+      before: "Belum hafal doa-doa harian",
+      after: "Hafal 20 doa harian dengan lancar"
     },
     {
-      before: "Belum percaya diri",
-      after: "Menjadi lebih percaya diri"
+      before: "Anak-anak kurang percaya diri",
+      after: "Tumbuh percaya diri melalui kegiatan kreatif"
     },
   ];
 
   return (
-    <section className="bg-gradient-to-b from-orange-600 to-orange-700 py-8 md:py-20">
-      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+    <section className="bg-gradient-to-br from-orange-900 to-orange-700 py-16 md:py-24">
+      <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-poppins leading-tight px-2">
-            Apa yang Sudah Kami Capai?
-          </h3>
-          <p className="text-lg sm:text-xl md:text-2xl text-white mb-6 md:mb-8 font-poppins px-2">
-            Dengan dukungan sebelumnya,{" "}
-            <span className="font-semibold text-yellow-200">Alhamdulillah</span>:
-          </p>
+          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+Apa Yang Telah Kami Capai?</h2>
+          <p className="text-xl md:text-2xl font-bold text-orange-300 mb-12 max-w-3xl mx-auto">
+Alhamdulillah</p>
           
-          <div className="space-y-4 md:space-y-6">
+          <div className="space-y-6">
             {achievements.map((achievement, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="bg-orange-800/70 backdrop-blur rounded-xl p-4 md:p-6 shadow-lg mx-2 md:mx-0"
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="bg-orange-800/60 backdrop-blur-lg rounded-2xl p-6 border border-orange-700 shadow-2xl hover:bg-orange-800/80 transition-all"
               >
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center text-white">
-                  <div className="flex items-center gap-3 w-full sm:w-1/2">
-                    <X className="w-9 h-9 text-red-400 flex-shrink-0" />
-                    <p className="text-lg sm:text-lg font-poppins text-left">
+                <div className="grid md:grid-cols-2 gap-6 items-center">
+                  <div className="flex items-center gap-5 text-white">
+                    <X className="w-12 h-12 text-red-500 bg-red-500/20 rounded-full p-2" />
+                    <p className="text-lg md:text-xl font-medium text-orange-300">
                       {achievement.before}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-3 w-full sm:w-1/2">
-                    <Check className="w-9 h-9 text-green-400 flex-shrink-0" />
-                    <p className="text-lg sm:text-lg font-poppins text-left">
+                  <div className="flex items-center gap-5 text-white">
+                    <Check className="w-12 h-12 text-green-500 bg-green-500/20 rounded-full p-2" />
+                    <p className="text-lg md:text-xl font-medium text-orange-100">
                       {achievement.after}
                     </p>
                   </div>

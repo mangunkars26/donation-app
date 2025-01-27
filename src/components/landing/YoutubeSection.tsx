@@ -182,7 +182,7 @@ const YouTubeSection: React.FC = () => {
             transition={{ delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-poppins leading-tight"
           >
-            Our Journey in Action
+            
           </motion.h2>
           
           <motion.p 
@@ -191,7 +191,7 @@ const YouTubeSection: React.FC = () => {
             transition={{ delay: 0.4 }}
             className="text-lg sm:text-xl text-white/90 mb-12 font-light max-w-2xl mx-auto"
           >
-            Experience the vibrant learning environment and meaningful activities that shape our students' journey
+          
           </motion.p>
 
           <motion.div
@@ -229,7 +229,7 @@ const YouTubeSection: React.FC = () => {
             </div>
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
@@ -239,7 +239,7 @@ const YouTubeSection: React.FC = () => {
               <Volume2 className="w-4 h-4" />
               Hover over the video and click the sound icon to toggle audio
             </p>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </section>

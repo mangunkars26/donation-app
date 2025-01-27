@@ -6,7 +6,7 @@ import { Heart, Book, Users } from "lucide-react";
 
 export default function BenefitsSection() {
   return (
-    <section className="bg-orange-500 py-20">
+    <section className="bg-purple-700 py-20">
       <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -15,7 +15,7 @@ export default function BenefitsSection() {
           className="text-center"
         >
           <h3 className="text-5xl font-extrabold text-white mb-12">
-            Manfaat dari <span className="text-purple-900">Sedekah Anda</span>
+            Manfaat dari <span className="text-purple-300">Sedekah Anda</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {[
