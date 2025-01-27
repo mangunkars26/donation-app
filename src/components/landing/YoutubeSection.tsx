@@ -46,12 +46,11 @@ interface YTPlayer {
 
 const YouTubeSection: React.FC = () => {
   const [player, setPlayer] = useState<YTPlayer | null>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isMuted, setIsMuted] = useState<boolean>(false); // Default not muted
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const hasPlayed = useRef<boolean>(false);
-
 
   useEffect(() => {
     let mounted = true;
@@ -77,7 +76,7 @@ const YouTubeSection: React.FC = () => {
         firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
       });
     };
-  
+
     const initializePlayer = async () => {
       try {
         setIsLoading(true);
@@ -88,8 +87,8 @@ const YouTubeSection: React.FC = () => {
         const newPlayer = new window.YT.Player(playerRef.current, {
           videoId: "qq6zlYPreOA",
           playerVars: {
-            autoplay: 1,
-            mute: 0,
+            autoplay: 1, // Autoplay enabled
+            mute: 0,    // Start unmuted
             controls: 1,
             showinfo: 0,
             rel: 0,
@@ -99,15 +98,37 @@ const YouTubeSection: React.FC = () => {
           events: {
             onReady: (event: { target: YTPlayer }) => {
               if (mounted) {
-                setPlayer(event.target); // Set player di sini
+                const player = event.target;
+                setPlayer(player);
                 setIsLoading(false);
-                event.target.playVideo();
+                
+                // Memastikan video mulai dengan suara
+                try {
+                  player.unMute();
+                  player.playVideo();
+                  setIsMuted(false);
+                } catch (error) {
+                  console.warn("Auto-unmute failed, might need user interaction:", error);
+                }
               }
             },
             onStateChange: (event) => {
               if (!mounted) return;
+              
+              // Auto-replay when ended
               if (event.data === window.YT.PlayerState.ENDED) {
                 event.target.playVideo();
+              }
+              
+              // Try to unmute if video starts muted
+              if (event.data === window.YT.PlayerState.PLAYING && !hasPlayed.current) {
+                hasPlayed.current = true;
+                try {
+                  event.target.unMute();
+                  setIsMuted(false);
+                } catch (error) {
+                  console.warn("Failed to unmute on first play:", error);
+                }
               }
             },
           },
@@ -129,8 +150,7 @@ const YouTubeSection: React.FC = () => {
         player.destroy();
       }
     };
-  }, [player]); // Tambahkan dependency array jika diperlukan
-
+  }, []); // Remove player from dependencies to avoid reinitialize
 
   const toggleSound = () => {
     if (!player) return;
@@ -162,7 +182,6 @@ const YouTubeSection: React.FC = () => {
       id="gallery"
       className="bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900 py-16 md:py-24 relative overflow-hidden"
     >
-      {/* Background decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -176,24 +195,6 @@ const YouTubeSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center space-y-8"
         >
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-poppins leading-tight"
-          >
-            
-          </motion.h2>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-lg sm:text-xl text-white/90 mb-12 font-light max-w-2xl mx-auto"
-          >
-          
-          </motion.p>
-
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -206,7 +207,6 @@ const YouTubeSection: React.FC = () => {
               </div>
             )}
             
-            {/* Sound toggle button */}
             <button
               onClick={toggleSound}
               type="button"
@@ -220,7 +220,6 @@ const YouTubeSection: React.FC = () => {
               )}
             </button>
 
-            {/* YouTube iframe container */}
             <div className="relative pb-[56.25%] h-0">
               <div
                 ref={playerRef}
@@ -228,18 +227,6 @@ const YouTubeSection: React.FC = () => {
               />
             </div>
           </motion.div>
-
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block border border-white/20"
-          >
-            <p className="text-white/90 text-sm font-medium flex items-center justify-center gap-3">
-              <Volume2 className="w-4 h-4" />
-              Hover over the video and click the sound icon to toggle audio
-            </p>
-          </motion.div> */}
         </motion.div>
       </div>
     </section>

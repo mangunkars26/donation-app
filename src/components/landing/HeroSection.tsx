@@ -12,27 +12,51 @@ export default function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Menggunakan CSS will-change untuk mengoptimasi performa
+    const elements = [tagRef, titleRef, descRef, buttonRef, imageRef];
+    elements.forEach(ref => {
+      if (ref.current) {
+        ref.current.style.willChange = 'opacity, transform';
+      }
+    });
+
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px"
+      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5], // Multiple thresholds untuk transisi lebih smooth
+      rootMargin: "50px" // Pre-load animations
     };
 
-    const animateElement = (element: HTMLElement) => {
-      element.classList.add('animate-fade-in');
+    const animateElement = (element: HTMLElement, delay: number) => {
+      requestAnimationFrame(() => {
+        element.style.transition = `opacity 800ms ease ${delay}ms, transform 800ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`;
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      });
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const refs = [tagRef, titleRef, descRef, buttonRef, imageRef];
-          refs.forEach((ref, index) => {
+          elements.forEach((ref, index) => {
             if (ref.current) {
-              setTimeout(() => {
-                animateElement(ref.current!);
-              }, index * 200);
+              // Set initial state
+              ref.current.style.opacity = '0';
+              ref.current.style.transform = 'translateY(20px)';
+              
+              // Trigger animation with staggered delay
+              animateElement(ref.current, index * 150);
             }
           });
-          observer.disconnect();
+          
+          // Disconnect after animation complete
+          setTimeout(() => {
+            observer.disconnect();
+            // Clean up will-change
+            elements.forEach(ref => {
+              if (ref.current) {
+                ref.current.style.willChange = 'auto';
+              }
+            });
+          }, elements.length * 150 + 800);
         }
       });
     }, observerOptions);
@@ -51,11 +75,11 @@ export default function HeroSection() {
       ref={heroRef}
       className="relative min-h-screen bg-gradient-to-br from-[#FF8E3C] via-[#FF6B35] to-[#FF5722] flex items-center py-8 md:py-20 overflow-hidden"
     >
-      {/* Background Elements */}
+      {/* Background Elements dengan blur yang dioptimasi */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#854D8E]/10 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
-        <div className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] bg-white/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2 will-change-transform"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#854D8E]/10 rounded-full blur-2xl transform translate-x-1/2 translate-y-1/2 will-change-transform"></div>
+        <div className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2 will-change-transform"></div>
       </div>
 
       <div className="container relative mx-auto px-4 md:px-6">
@@ -64,7 +88,7 @@ export default function HeroSection() {
           <div className="space-y-6 md:space-y-8 text-center lg:text-left">
             <div 
               ref={tagRef}
-              className="opacity-0 inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4"
+              className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4"
             >
               <span className="text-white/90 mt-4 text-sm font-medium">
                 ✨ Mari Bergabung Bersama Kami
@@ -73,7 +97,7 @@ export default function HeroSection() {
 
             <h1 
               ref={titleRef}
-              className="opacity-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
             >
               <span className="text-white">Dukung</span>{" "}
               <span className="text-[#854D8E] drop-shadow-lg">Pembangunan</span>{" "}
@@ -93,7 +117,7 @@ export default function HeroSection() {
 
             <p 
               ref={descRef}
-              className="opacity-0 text-lg sm:text-xl md:text-2xl text-white/90 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
               Untuk{" "}
               <span className="font-semibold text-[#854D8E]">
@@ -106,9 +130,19 @@ export default function HeroSection() {
               <button 
                 ref={buttonRef}
                 onClick={() => {
-                  document.getElementById("donation-section")?.scrollIntoView({ behavior: "smooth" });
+                  const element = document.getElementById("donation-section");
+                  if (element) {
+                    const headerOffset = 80;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth"
+                    });
+                  }
                 }}
-                className="opacity-0 bg-[#854D8E] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:scale-105 active:scale-95"
+                className="bg-[#854D8E] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:scale-105 active:scale-95"
               >
                 <span>Donasi Sekarang</span>
                 <svg
@@ -131,7 +165,7 @@ export default function HeroSection() {
           {/* Right Image */}
           <div 
             ref={imageRef}
-            className="opacity-0 relative mt-8 lg:mt-0"
+            className="relative mt-8 lg:mt-0"
           >
             <div className="relative w-full max-w-lg mx-auto aspect-[4/3] sm:aspect-square">
               <div className="absolute inset-0 bg-gradient-to-tr from-[#854D8E]/20 to-white/20 rounded-[2rem] sm:rounded-[3rem] rotate-6 transform backdrop-blur-sm"></div>
@@ -143,7 +177,10 @@ export default function HeroSection() {
                   alt="PAUD-TKIT Building"
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: "cover" }}
+                  style={{ 
+                    objectFit: "cover",
+                    willChange: "transform"
+                  }}
                   className="transition-transform duration-700 hover:scale-110"
                   priority
                 />
@@ -157,4 +194,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
