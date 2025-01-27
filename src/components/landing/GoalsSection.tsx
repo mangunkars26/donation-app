@@ -5,20 +5,20 @@ import { motion } from "framer-motion";
 
 export default function GoalsSection() {
   return (
-    <div className="bg-orange-700 py-16 px-4 md:px-12">
-      <div className="max-w-4xl mx-auto">
+    <section className="bg-gradient-to-r from-orange-500 to-orange-700 py-16 px-4 md:px-12">
+      <div className="max-w-6xl mx-auto">
         {/* Title Section */}
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-orange-200 mb-6">
-            Mari Bersama Mewujudkan Sekolah yang Lebih Layak
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+            Bersama Kita Wujudkan Sekolah Impian
           </h2>
-          <p className="text-orange-200 text-lg max-w-2xl mx-auto">
-            Melalui proyek renovasi ini, kami ingin:
+          <p className="text-teal-100 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            Dengan dukungan Anda, kami bertekad untuk menciptakan lingkungan belajar yang lebih baik dan lebih layak untuk semua siswa.
           </p>
         </motion.div>
 
@@ -26,8 +26,8 @@ export default function GoalsSection() {
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ staggerChildren: 0.3 }}
-          className="grid md:grid-cols-2 gap-6 mb-12"
+          transition={{ staggerChildren: 0.2 }}
+          className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8"
         >
           {[
             "Merenovasi ruang belajar agar lebih nyaman dan aman.",
@@ -37,22 +37,27 @@ export default function GoalsSection() {
           ].map((item, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="bg-orange-400 shadow-md rounded-lg p-6 border-l-4 border-orange-500 hover:shadow-xl transition-all hover:border-orange-700"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-teal-500 hover:shadow-2xl transition-transform transform hover:scale-105"
             >
-              <div className="flex items-center">
-                <span className="mr-4 text-2xl text-orange-600">
-                  {index + 1}
-                </span>
-                <p className="text-orange-800 font-semibold">{item}</p>
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 bg-teal-600 text-white flex items-center justify-center rounded-full text-lg font-bold">
+                    {index + 1}
+                  </div>
+                </div>
+                <div className="ml-4">
+                  <p className="text-teal-900 text-lg font-medium leading-snug">
+                    {item}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-
       </div>
-    </div>
+    </section>
   );
 }

@@ -7,11 +7,12 @@ import { Heart, DollarSign, User, MapPin } from "lucide-react";
 
 
 const DONATION_PRESETS = [
-  { value: 50000, label: "Rp 50K", description: "Dukung Buku Pelajaran" },
-  { value: 100000, label: "Rp 100K", description: "Fasilitas Bermain" },
-  { value: 250000, label: "Rp 250K", description: "Renovasi Ruang Kelas" },
-  { value: 500000, label: "Rp 500K", description: "Pengembangan Kurikulum" },
+  { value: 50000, label: "Rp 50K", description: "Bronze" },
+  { value: 100000, label: "Rp 100K", description: "Silver" },
+  { value: 250000, label: "Rp 250K", description: "Gold" },
+  { value: 500000, label: "Rp 500K", description: "Platinum" },
 ];
+
 
 const DonationCallSection: React.FC = () => {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
