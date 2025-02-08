@@ -26,7 +26,7 @@ const challenges: Challenge[] = [
     desc: "yang mengganggu proses pembelajaran",
     icon: AlertTriangle,
     image: "/images/atap.jpeg",
-    alt: "Kondisi atap yang bocor"
+    alt: "Kondisi atap bocor"
   },
   {
     title: "Fasilitas Bermain Minim",
