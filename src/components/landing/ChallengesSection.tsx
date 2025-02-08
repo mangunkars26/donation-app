@@ -25,7 +25,7 @@ const challenges: Challenge[] = [
     title: "Atap Sering Bocor Ketika Hujan",
     desc: "yang mengganggu proses pembelajaran",
     icon: AlertTriangle,
-    image: "/images/about.jpg",
+    image: "/images/atap.jpeg",
     alt: "Kondisi atap yang bocor"
   },
   {
